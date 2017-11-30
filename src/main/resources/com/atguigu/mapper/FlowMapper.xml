@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atguigu.mapper.FlowMapper">
+
+
+	<insert id="insert_flow_list" useGeneratedKeys="true" keyProperty="id" parameterType="com.atguigu.bean.T_MALL_FLOW">
+		insert into
+		t_mall_flow
+		(`psfsh`,`psshj`,`psmsh`,`yh_id`,`chjshj`,`dd_id`,`mqdd`,`mdd`,`ywy`,`lxfsh`)
+		values
+		<foreach collection="list" item="flow" separator=",">
+			(
+			#{flow.psfsh},
+			#{flow.psshj},
+			#{flow.psmsh},
+			#{flow.yh_id},
+			#{flow.chjshj},
+			#{flow.dd_id},
+			#{flow.mqdd},
+			#{flow.mdd},
+			#{flow.ywy},
+			#{flow.lxfsh}
+			)
+		</foreach>
+	</insert>
+
+
+</mapper>

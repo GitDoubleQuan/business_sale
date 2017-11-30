@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atguigu.mapper.OrderInfoMapper">
+
+	<insert id="insert_order_info_list" useGeneratedKeys="true" keyProperty="id" parameterType="com.atguigu.bean.T_MALL_ORDER_INFO">
+
+		insert into
+		t_mall_order_info
+		(`dd_id`,`sku_id`,`chjshj`,`sku_mch`,`shp_tp`,`sku_jg`,`sku_shl`,`sku_kcdz`,`flow_id`,`gwch_id`)
+		values
+		<foreach collection="list" item="info" separator=",">
+			(
+			#{info.dd_id},
+			#{info.sku_id},
+			#{info.chjshj},
+			#{info.sku_mch},
+			#{info.shp_tp},
+			#{info.sku_jg},
+			#{info.sku_shl},
+			#{info.sku_kcdz},
+			#{info.flow_id},
+			#{info.gwch_id}
+			)
+		</foreach>
+
+	</insert>
+</mapper>
