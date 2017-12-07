@@ -2,12 +2,14 @@ package com.atguigu.service;
 
 import java.util.List;
 
+import com.atguigu.route.DataSourceToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.atguigu.bean.T_MALL_ADDRESS;
 import com.atguigu.bean.T_MALL_USER_ACCOUNT;
 import com.atguigu.mapper.AddressMapper;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AddressServerImp implements AddressServerInf {
@@ -23,6 +25,7 @@ public class AddressServerImp implements AddressServerInf {
 
 	}
 
+//	@Transactional
 	@Override
 	public List<T_MALL_ADDRESS> get_addresses_by_user_id(T_MALL_USER_ACCOUNT user) {
 		List<T_MALL_ADDRESS> select_addresses_by_user_id = addressMapper.select_addresses_by_user_id(user);

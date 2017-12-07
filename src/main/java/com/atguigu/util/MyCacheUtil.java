@@ -22,21 +22,30 @@ public class MyCacheUtil {
 		return exists;
 	}
 
-	public static int inter_redis_key(String dis_key, List<T_MALL_SKU_ATTR_VALUE> list_attr_value) {
+	public static String inter_redis_key(int class_2_id, List<T_MALL_SKU_ATTR_VALUE> list_attr_value) {
+
+		String dis_key = "dis_" + class_2_id;
 		Jedis jedis = null;
 		try {
 			jedis = JedisPoolUtils.getJedis();
 		} catch (Exception e) {
-			return 1;
+			return "";
 		}
 
 		String[] keys = new String[list_attr_value.size()];// attr_14_37
 		for (int i = 0; i < list_attr_value.size(); i++) {
-			keys[i] = "attr_" + list_attr_value.get(i).getShxm_id() + "_" + list_attr_value.get(i).getShxzh_id();
+			keys[i] = "attr_" + class_2_id + "_" + list_attr_value.get(i).getShxm_id() + "_"
+					+ list_attr_value.get(i).getShxzh_id();
+			dis_key = dis_key + "_" + keys[i];
 		}
-		jedis.zinterstore(dis_key, keys);
 
-		return 0;
+		// 判断当前交叉的key是否已经存在
+		Boolean exists = jedis.exists(dis_key);
+		if (!exists) {
+			jedis.zinterstore(dis_key, keys);
+		}
+
+		return dis_key;
 	}
 
 	public static <T> int refresh_redis_key(String key, List<T> list) {

@@ -20,7 +20,9 @@ public class JedisPoolUtils {
 		c.setTestOnBorrow(true); // 获取连接时是否检查连接的有效性：是
 		c.setTestWhileIdle(true); // 空闲时是否检查连接的有效性：是
 
-		jedisPool = new JedisPool(c, "192.168.222.11", 6379); // 初始化连接池
+		String redisIp = MyPropertiesUtil.getMyProperty("redis.properties", "redis.ip");
+		String redisPort = MyPropertiesUtil.getMyProperty("redis.properties", "redis.port");
+		jedisPool = new JedisPool(c, redisIp, Integer.valueOf(redisPort)); // 初始化连接池
 	}
 
 	/**

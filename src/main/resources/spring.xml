@@ -24,22 +24,40 @@
     </context:component-scan>
 
 
+    <!--多数据源-->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
         <property name="driverClassName" value="${driverClassName}" />
-        <property name="url" value="${url}" />
         <property name="username" value="${jdbc.username}" />
         <property name="password" value="${jdbc.password}" />
     </bean>
 
+    <bean id="dataSourceMain" parent="dataSource">
+        <property name="url" value="${url.main}" />
+    </bean>
+
+    <bean id="dataSourceUser" parent="dataSource">
+        <property name="url" value="${url.user}" />
+    </bean>
+
+    <bean id="routeDataSource" class="com.atguigu.route.MyRouteDateSource">
+        <property name="targetDataSources">
+            <map>
+                <entry key="main" value-ref="dataSourceMain"/>
+                <entry key="user" value-ref="dataSourceUser"/>
+            </map>
+        </property>
+        <property name="defaultTargetDataSource" ref="dataSourceMain"/>
+    </bean>
+
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource" />
+        <property name="dataSource" ref="routeDataSource" />
     </bean>
 
     <!-- 支持注解事务处理 -->
     <tx:annotation-driven transaction-manager="transactionManager" />
 
     <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="dataSource" />
+        <property name="dataSource" ref="routeDataSource" />
         <property name="configLocation" value="classpath:mybatis-config.xml" />
     </bean>
 
