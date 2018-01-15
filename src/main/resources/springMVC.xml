@@ -33,7 +33,7 @@
         <property name="maxUploadSize" value="10240000" />
     </bean>
 
-    <!-- 4、启动注解 -->
+    <!-- 4.解决静态资源问题 -->
     <mvc:annotation-driven />
     <mvc:default-servlet-handler />
 
